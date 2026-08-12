@@ -1,0 +1,27 @@
+:root {
+    --primary-color: #2c3e50;
+    --accent-color: #3498db;
+    --bg-color: #f8f9fa;
+    --border-color: #dee2e6;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: sans-serif; color: #333; background-color: var(--bg-color); line-height: 1.6; }
+.layout-container { display: flex; min-height: 100vh; }
+.sidebar { width: 280px; background: #fff; border-right: 1px solid var(--border-color); padding: 20px; position: fixed; height: 100vh; }
+.main-content { margin-left: 280px; flex: 1; padding: 40px; }
+.global-setting { background: #f1f3f5; padding: 10px; border-radius: 6px; margin-bottom: 20px; font-size: 0.9rem; }
+.nav-menu { display: flex; flex-direction: column; gap: 8px; }
+.nav-menu a { text-decoration: none; color: #495057; padding: 8px 12px; border-radius: 4px; }
+.nav-menu a:hover, .nav-menu a.active { background: #e7f5ff; color: var(--accent-color); font-weight: bold; }
+.question-box { background: #fff; border: 1px solid var(--border-color); padding: 20px; margin-bottom: 20px; border-radius: 8px; }
+.dataframe-table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.9rem; }
+.dataframe-table th, .dataframe-table td { border: 1px solid var(--border-color); padding: 8px; text-align: center; }
+.dataframe-table th { background-color: #f1f3f5; }
+.toggle-btn { background: var(--accent-color); color: white; border: none; padding: 10px 16px; border-radius: 4px; cursor: pointer; }
+.answer-content { display: none; background: #272822; padding: 15px; border-radius: 4px; color: #f8f8f2; margin-bottom: 20px; overflow-x: auto; }
+.answer-content.show-answer { display: block; }
+@media (max-width: 768px) {
+    .layout-container { flex-direction: column; }
+    .sidebar { position: static; width: 100%; height: auto; border-right: none; border-bottom: 1px solid var(--border-color); }
+    .main-content { margin-left: 0; padding: 20px; }
+}
