@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>01. 데이터 로드 - Pandas Study</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+    <div class="layout-container">
+        <aside class="sidebar">
+            <h2>🐼 Pandas Study</h2>
+            <div class="global-setting">
+                <label><input type="checkbox" id="globalAnswerToggle" onchange="setGlobalToggle(this)"> 답안 항상 보기</label>
+            </div>
+            <nav class="nav-menu">
+                <a href="../index.html">🏠 홈 (메인)</a>
+                <a href="./01_load_data.html" class="active">01. 데이터 로드 및 확인</a>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <h1>01. 데이터 로드 및 확인</h1>
+            <div class="question-box">
+                <h3>Q. CSV 파일을 로드하고 상위 3개 행을 확인하세요.</h3>
+                <table class="dataframe-table">
+                    <tr><th>ID</th><th>Measurement</th><th>Status</th></tr>
+                    <tr><td>101</td><td>12.45</td><td>Pass</td></tr>
+                </table>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer(this)">답안 확인</button>
+            <div class="answer-content">
+                <pre>import pandas as pd
+df = pd.read_csv('data.csv')
+print(df.head(3))</pre>
+            </div>
+        </main>
+    </div>
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>
