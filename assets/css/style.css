@@ -38,7 +38,16 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-
 /* 사이드바 스타일 */
 .sidebar { width: 280px; background: var(--sidebar-bg); border-right: 1px solid var(--border-color); padding: 24px; position: fixed; top: 0; left: 0; height: 100vh; overflow-y: auto; z-index: 100; transition: transform 0.3s ease, width 0.3s ease; }
 .sidebar.collapsed { transform: translateX(-100%); width: 0; padding: 0; border: none; }
-.sidebar-header h2 { font-size: 1.25rem; color: var(--primary); margin-bottom: 24px; font-weight: 700; }
+
+.sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.sidebar-header h2 { font-size: 1.25rem; color: var(--primary); font-weight: 700; margin: 0; }
+.close-sidebar-btn { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-main); padding: 4px 8px; border-radius: 4px; display: none; }
+.close-sidebar-btn:hover { background: var(--border-color); }
+
+/* 검색바 스타일 */
+.sidebar-search-box { margin-bottom: 16px; }
+.sidebar-search-box input { width: 100%; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-main); color: var(--text-main); font-size: 0.9rem; outline: none; }
+.sidebar-search-box input:focus { border-color: var(--accent); }
 
 .nav-menu { display: flex; flex-direction: column; gap: 6px; }
 .nav-menu a { text-decoration: none; color: var(--text-sub); padding: 10px 14px; border-radius: 6px; font-size: 0.95rem; font-weight: 500; transition: all 0.2s; display: block; }
@@ -98,6 +107,7 @@ p { margin-bottom: 16px; color: var(--text-sub); }
 @media (max-width: 768px) {
     .sidebar { transform: translateX(-100%); width: 0; padding: 0; border: none; }
     .sidebar.mobile-show { transform: translateX(0); width: 280px; padding: 24px; border-right: 1px solid var(--border-color); }
+    .sidebar.mobile-show .close-sidebar-btn { display: block; }
     .main-wrapper { margin-left: 0 !important; width: 100% !important; }
     .data-flow { grid-template-columns: 1fr; }
     .main-content { padding: 20px; }
