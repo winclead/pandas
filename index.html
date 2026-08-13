@@ -10,7 +10,9 @@
     <div class="layout-container">
         <!-- 사이드바 -->
         <aside class="sidebar">
-            <h2>🐼 Pandas Study</h2>
+            <div class="sidebar-header">
+                <h2>🐼 Pandas Study</h2>
+            </div>
             <div class="global-setting">
                 <label>
                     <input type="checkbox" id="globalAnswerToggle" onchange="setGlobalToggle(this)">
@@ -25,14 +27,20 @@
 
         <!-- 메인 콘텐츠 영역 -->
         <main class="main-content">
-            <h1>Pandas 전처리 스터디에 오신 것을 환영합니다!</h1>
-            <p class="intro-text">이 사이트는 파이썬 Pandas를 활용한 다양한 데이터 전처리 코드를 공부하고 실습하기 위한 공간입니다. 좌측 목차에서 원하는 주제를 선택해 학습을 시작하세요.</p>
+            <div class="hero-section">
+                <h1>Pandas 데이터 전처리 스터디</h1>
+                <p>실무와 분석에 바로 쓰는 파이썬 판다스 핵심 전처리 코드를 AS-IS / TO-BE 기반으로 학습하는 공간입니다.</p>
+            </div>
             
             <section class="card-section">
                 <h2>📚 학습 목차</h2>
-                <ul>
-                    <li><a href="./pages/01_load_data.html">01. 데이터 로드 및 기본 정보 확인하기</a></li>
-                </ul>
+                <div class="chapter-card" onclick="location.href='./pages/01_load_data.html'">
+                    <span class="chapter-num">01</span>
+                    <div class="chapter-info">
+                        <h3>데이터 로드 및 기본 정보 확인</h3>
+                        <p>CSV 파일 읽어오기 및 상위 데이터 파악</p>
+                    </div>
+                </div>
             </section>
         </main>
     </div>
