@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (checkbox) checkbox.checked = isGlobalShow;
     if (isGlobalShow) applyGlobalAnswerState(true);
 
-    // 바깥쪽 클릭 시 사이드바 닫기 (모바일 대응)
     document.addEventListener('click', (event) => {
         const sidebar = document.getElementById('sidebar');
         const menuBtn = document.querySelector('.icon-btn[onclick="toggleSidebar()"]');
@@ -25,7 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
 function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
     const wrapper = document.getElementById('mainWrapper');
-    
     if (window.innerWidth <= 768) {
         sidebar.classList.toggle('mobile-show');
     } else {
@@ -34,17 +32,19 @@ function toggleSidebar() {
     }
 }
 
-// 사이드바 실시간 검색 필터
+// Phase (섹션) 접기/펴기 아코디언 기능
+function togglePhase(btn) {
+    btn.classList.toggle('collapsed');
+    const items = btn.nextElementSibling;
+    items.classList.toggle('collapsed');
+}
+
 function filterSidebar() {
     const query = document.getElementById('sidebarSearch').value.toLowerCase();
     const links = document.querySelectorAll('#navMenu a');
     links.forEach(link => {
         const text = link.textContent.toLowerCase();
-        if (text.includes(query)) {
-            link.style.display = 'block';
-        } else {
-            link.style.display = 'none';
-        }
+        link.style.display = text.includes(query) ? 'block' : 'none';
     });
 }
 
@@ -63,9 +63,7 @@ function toggleTheme() {
 
 function updateThemeButton(isDark) {
     const btn = document.getElementById('themeToggleBtn');
-    if (btn) {
-        btn.textContent = isDark ? '☀️ 라이트모드' : '🌙 다크모드';
-    }
+    if (btn) btn.textContent = isDark ? '☀️ 라이트모드' : '🌙 다크모드';
 }
 
 function toggleAnswer(button) {
