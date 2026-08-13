@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>23. 수치형 데이터의 구간화 및 범주화 (cut, qcut) - Pandas Study</title>
+    <link rel="stylesheet" href="../assets/css/style.css?v=4">
+</head>
+<body>
+    <div class="layout-container">
+        <!-- 사이드바 시작 -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2>🐼 Pandas Study</h2>
+                <button class="close-sidebar-btn" onclick="toggleSidebar()">✕</button>
+            </div>
+            <div class="sidebar-search-box">
+                <input type="text" id="sidebarSearch" placeholder="🔍 주제 검색..." oninput="filterSidebar()">
+            </div>
+            <nav class="nav-menu" id="navMenu">
+                <a href="../index.html">🏠 홈 (메인)</a>
+                <a href="./datasets.html">📂 데이터 다운로드 센터</a>
+                
+                <button class="nav-phase-btn collapsed" onclick="togglePhase(this)">Phase 1. 입출력 & 프로파일링 <span class="chevron">▼</span></button>
+                <div class="phase-items collapsed">
+                    <a href="./01_read_csv_advanced.html">01. 인코딩 및 구분자 문제 해결</a>
+                    <a href="./02_large_data_chunk.html">02. 대용량 데이터 로드 (chunksize)</a>
+                    <a href="./03_basic_profiling.html">03. 기초 메타데이터 파악</a>
+                    <a href="./04_describe_stats.html">04. 통계량 및 분포 확인</a>
+                    <a href="./05_value_counts.html">05. 고유값 확인 및 빈도수 분석</a>
+                </div>
+                
+                <button class="nav-phase-btn collapsed" onclick="togglePhase(this)">Phase 2. 정밀 타겟팅 <span class="chevron">▼</span></button>
+                <div class="phase-items collapsed">
+                    <a href="./06_loc_iloc.html">06. 행/열 선택 (loc, iloc)</a>
+                    <a href="./07_boolean_indexing.html">07. 다중 조건 불리언 인덱싱</a>
+                    <a href="./08_string_filtering.html">08. 텍스트 패턴 필터링</a>
+                    <a href="./09_isin_filtering.html">09. 리스트 내 값 일치 여부 (isin)</a>
+                    <a href="./10_query_method.html">10. 쿼리문을 이용한 필터링 (query)</a>
+                </div>
+
+                <button class="nav-phase-btn collapsed" onclick="togglePhase(this)">Phase 3. 데이터 클렌징 1 <span class="chevron">▼</span></button>
+                <div class="phase-items collapsed">
+                    <a href="./11_finding_nan.html">11. 결측치 탐색 (isna, notna)</a>
+                    <a href="./12_dropna_strategies.html">12. 결측치 제거 (dropna)</a>
+                    <a href="./13_fillna_strategies.html">13. 상황별 결측치 대체 (fillna)</a>
+                    <a href="./14_outlier_detection.html">14. 이상치 탐지 (IQR, Z-score)</a>
+                    <a href="./15_outlier_clipping.html">15. 이상치 및 오기입 보정 (replace)</a>
+                </div>
+
+                <button class="nav-phase-btn collapsed" onclick="togglePhase(this)">Phase 4. 데이터 클렌징 2 <span class="chevron">▼</span></button>
+                <div class="phase-items collapsed">
+                    <a href="./16_astype.html">16. 데이터 타입 변환 (astype)</a>
+                    <a href="./17_to_numeric.html">17. 숫자형 강제 변환 (to_numeric)</a>
+                    <a href="./18_categorical.html">18. Categorical 데이터 활용</a>
+                    <a href="./19_drop_duplicates.html">19. 중복 데이터 처리</a>
+                </div>
+
+                <button class="nav-phase-btn collapsed" onclick="togglePhase(this)">Phase 5. 피처 엔지니어링 1 <span class="chevron">▼</span></button>
+                <div class="phase-items collapsed">
+                    <a href="./20_str_split.html">20. 문자열 분할 (str.split)</a>
+                    <a href="./21_regex_extract.html">21. 정규표현식 추출 (str.extract)</a>
+                    <a href="./22_np_select_where.html">22. 조건부 파생 변수 (np.where)</a>
+                    <a href="./23_cut_qcut.html">23. 데이터 범주화 (cut, qcut)</a>
+                    <a href="./24_apply_lambda.html">24. 커스텀 함수 적용 (apply)</a>
+                </div>
+
+                <button class="nav-phase-btn collapsed" onclick="togglePhase(this)">Phase 6. 피처 엔지니어링 2 <span class="chevron">▼</span></button>
+                <div class="phase-items collapsed">
+                    <a href="./25_to_datetime_advanced.html">25. 시계열 변환 심화</a>
+                    <a href="./26_dt_properties.html">26. 시계열 속성 추출 (dt)</a>
+                    <a href="./27_diff_shift.html">27. 리드/래그 변수 생성 (diff, shift)</a>
+                    <a href="./28_rolling_windows.html">28. 이동 평균 연산 (rolling)</a>
+                    <a href="./29_resample_freq.html">29. 시계열 리샘플링 (resample)</a>
+                </div>
+
+                <button class="nav-phase-btn collapsed" onclick="togglePhase(this)">Phase 7. 형태 변환 <span class="chevron">▼</span></button>
+                <div class="phase-items collapsed">
+                    <a href="./30_pivot_table.html">30. 피벗 테이블 생성 (pivot)</a>
+                    <a href="./31_flatten_pivot.html">31. 피벗 구조 평탄화</a>
+                    <a href="./32_melt.html">32. 세로로 길게 풀기 (melt)</a>
+                    <a href="./33_index_management.html">33. 인덱스 관리 및 재정렬</a>
+                </div>
+
+                <button class="nav-phase-btn collapsed" onclick="togglePhase(this)">Phase 8. 조인과 병합 <span class="chevron">▼</span></button>
+                <div class="phase-items collapsed">
+                    <a href="./34_concat_data.html">34. 단순 이어 붙이기 (concat)</a>
+                    <a href="./35_merge_basic.html">35. 키 기반 조인 1 (merge 기본)</a>
+                    <a href="./36_merge_advanced.html">36. 키 기반 조인 2 (merge 심화)</a>
+                    <a href="./37_join_index.html">37. 인덱스 활용 결합 (join)</a>
+                </div>
+
+                <button class="nav-phase-btn collapsed" onclick="togglePhase(this)">Phase 9. 집계 및 요약 <span class="chevron">▼</span></button>
+                <div class="phase-items collapsed">
+                    <a href="./38_groupby_agg.html">38. 그룹별 통계량 집계 (groupby)</a>
+                    <a href="./39_groupby_reset.html">39. 그룹 연산 평탄화</a>
+                    <a href="./40_groupby_transform_filter.html">40. 그룹 내 변환 및 필터링</a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- 메인 콘텐츠 시작 -->
+        <div class="main-wrapper" id="mainWrapper">
+            <header class="top-navbar">
+                <div class="nav-left">
+                    <button class="icon-btn" onclick="toggleSidebar()">☰ 메뉴</button>
+                </div>
+                <div class="nav-right">
+                    <label class="global-toggle-label">
+                        <input type="checkbox" id="globalAnswerToggle" onchange="setGlobalToggle(this)"> 답안 항상 보기
+                    </label>
+                    <button class="icon-btn" id="themeToggleBtn" onclick="toggleTheme()">🌙 다크모드</button>
+                </div>
+            </header>
+
+<main class="main-content">
+                <h1>23. 수치형 데이터의 구간화 및 범주화 (cut, qcut)</h1>
+                
+                <div class="question-box">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
+                        <h3 style="margin: 0;">Q. 수율(Yield) 데이터를 A, B, C 등급으로 구간을 나누세요.</h3>
+                        <button class="icon-btn" onclick="downloadCurrentCSV()">📥 yield_data.csv 다운로드</button>
+                    </div>
+                    <p><code>yield_data.csv</code>의 수율 값(0~100)을 바탕으로, <strong>90 이상은 A, 80 이상 90 미만은 B, 그 이하는 C</strong> 등급으로 분할(Binning)하는 <code>pd.cut()</code> 사용 코드를 작성하세요.</p>
+                    
+                    <div class="data-flow">
+                        <div class="data-box asis">
+                            <h4>[AS-IS] 연속적인 숫자 데이터</h4>
+                            <table class="dataframe-table">
+                                <tr><th>LotID</th><th>Yield</th></tr>
+                                <tr><td>L-01</td><td>95.5</td></tr>
+                                <tr><td>L-02</td><td>82.1</td></tr>
+                                <tr><td>L-03</td><td>78.0</td></tr>
+                            </table>
+                        </div>
+                        <div class="data-box tobe">
+                            <h4>[TO-BE] 정의된 구간에 따른 범주 할당</h4>
+                            <table class="dataframe-table">
+                                <tr><th>LotID</th><th>Yield</th><th>Grade</th></tr>
+                                <tr><td>L-01</td><td>95.5</td><td>A</td></tr>
+                                <tr><td>L-02</td><td>82.1</td><td>B</td></tr>
+                                <tr><td>L-03</td><td>78.0</td><td>C</td></tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="toggle-btn" onclick="toggleAnswer(this)">답안 확인</button>
+                
+                <div class="answer-content">
+                    <div class="solution-item">
+                        <div class="solution-title">💡 방법 1: 절대적인 수치 기준으로 구간 나누기 (pd.cut)</div>
+                        <pre class="code-block">import pandas as pd
+df = pd.read_csv('yield_data.csv')
+
+# 경계값 리스트: 0부터 80까지, 80부터 90까지, 90부터 100까지
+bins = [0, 80, 90, 100]
+# 각 구간에 붙일 라벨 (경계값이 4개면 라벨은 3개여야 함)
+labels = ['C', 'B', 'A']
+
+# right=False 옵션을 주면 [0, 80) 즉, 80 미만으로 처리됨 (실무 디테일)
+df['Grade'] = pd.cut(df['Yield'], bins=bins, labels=labels, right=False)
+print(df)</pre>
+                    </div>
+                    
+                    <div class="solution-item">
+                        <div class="solution-title">💡 방법 2: 수치 상관없이 인원수(비율)에 맞춰 나누기 (pd.qcut)</div>
+                        <pre class="code-block"># 만약 점수에 상관없이 '상위 33%, 중위 33%, 하위 33%'로 자르고 싶다면 qcut을 씁니다.
+# df['Grade_Q'] = pd.qcut(df['Yield'], q=3, labels=['C', 'B', 'A'])</pre>
+                    </div>
+                </div>
+                
+                <script>
+                    function downloadCurrentCSV() {
+                        const csvData = `LotID,Yield\nL-01,95.5\nL-02,82.1\nL-03,78.0`;
+                        downloadCSVFile('yield_data.csv', csvData);
+                    }
+                </script>
+            </main>
+        </div>
+    </div>
+    
+    <script src="../assets/js/main.js?v=4"></script>
+    <!-- 활성화된 메뉴를 찾아 자동으로 아코디언을 펼쳐주는 스크립트 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const activeLink = document.querySelector('.nav-menu a[href*="23_cut_qcut.html"]');
+            if(activeLink) {
+                activeLink.classList.add('active');
+                const parentPhase = activeLink.closest('.phase-items');
+                if(parentPhase) {
+                    parentPhase.classList.remove('collapsed');
+                    parentPhase.previousElementSibling.classList.remove('collapsed');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
