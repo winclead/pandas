@@ -36,7 +36,9 @@ function toggleSidebar() {
 function togglePhase(btn) {
     btn.classList.toggle('collapsed');
     const items = btn.nextElementSibling;
-    items.classList.toggle('collapsed');
+    if (items && items.classList.contains('phase-items')) {
+        items.classList.toggle('collapsed');
+    }
 }
 
 function filterSidebar() {
