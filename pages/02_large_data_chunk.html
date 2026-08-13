@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>02. 대용량 데이터 로드 (chunksize) - Pandas Study</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <!-- 캐시 방지를 위해 ?v=3 추가 -->
+    <link rel="stylesheet" href="../assets/css/style.css?v=3">
 </head>
 <body>
     <div class="layout-container">
@@ -77,27 +78,40 @@
                 </div>
 
                 <button class="toggle-btn" onclick="toggleAnswer(this)">답안 확인</button>
-                <div class="answer-content">import pandas as pd
+                
+                <!-- 분리된 답안 박스 영역 -->
+                <div class="answer-content">
+                    <!-- 방법 1 -->
+                    <div class="solution-item">
+                        <div class="solution-title">💡 방법 1: 표준 for문 활용 (가독성 우수)</div>
+                        <pre class="code-block">import pandas as pd
 
-# [방법 1] 표준적인 for문 활용법 (직관적이고 가독성이 좋음)
 total_fail_count = 0
 chunk_iter = pd.read_csv('huge_log.csv', chunksize=2)
 
 for chunk in chunk_iter:
     total_fail_count += (chunk['Status'] == 'Fail').sum()
     
-print(f"Total Fail Count (방법 1): {total_fail_count}")
+print(f"Total Fail Count: {total_fail_count}")</pre>
+                    </div>
 
+                    <!-- 방법 2 -->
+                    <div class="solution-item">
+                        <div class="solution-title">💡 방법 2: 제너레이터 표현식과 sum() 결합 (Pythonic)</div>
+                        <pre class="code-block">import pandas as pd
 
-# [방법 2] 제너레이터 표현식과 sum()을 결합한 파이썬다운(Pythonic) 한 줄 코드
 chunk_iter2 = pd.read_csv('huge_log.csv', chunksize=2)
 total_fail_count2 = sum((chunk['Status'] == 'Fail').sum() for chunk in chunk_iter2)
 
-print(f"Total Fail Count (방법 2): {total_fail_count2}")</div>
+print(f"Total Fail Count: {total_fail_count2}")</pre>
+                    </div>
+                </div>
             </main>
         </div>
     </div>
-    <script src="../assets/js/main.js?v=2"></script>
+    
+    <!-- 캐시 방지를 위해 ?v=3 추가 -->
+    <script src="../assets/js/main.js?v=3"></script>
     <script>
         function downloadCurrentCSV() {
             const csvData = `LogID,EqpID,Status\n1,EQ-01,Pass\n2,EQ-02,Fail\n3,EQ-01,Pass\n4,EQ-03,Fail\n5,EQ-02,Pass\n6,EQ-01,Fail`;
