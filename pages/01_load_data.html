@@ -11,8 +11,12 @@
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <h2>🐼 Pandas Study</h2>
+                <button class="close-sidebar-btn" onclick="toggleSidebar()">✕</button>
             </div>
-            <nav class="nav-menu">
+            <div class="sidebar-search-box">
+                <input type="text" id="sidebarSearch" placeholder="🔍 주제 검색..." oninput="filterSidebar()">
+            </div>
+            <nav class="nav-menu" id="navMenu">
                 <a href="../index.html">🏠 홈 (메인)</a>
                 <a href="./datasets.html">📂 데이터 다운로드 센터</a>
                 <a href="./01_load_data.html" class="active">01. 데이터 로드 및 확인</a>
@@ -41,7 +45,7 @@
                 <div class="question-box">
                     <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
                         <h3 style="margin: 0;">Q. CSV 파일을 로드하고 상위 3개 행을 확인하세요.</h3>
-                        <button class="icon-btn" onclick="downloadCurrentCSV()">📥 data.csv 다운로드</button>
+                        <button class="icon-btn" onclick="downloadCurrentCSV()">📥 CSV 다운로드</button>
                     </div>
                     <p>주어진 <code>data.csv</code> 파일을 Pandas로 읽어온 뒤, 데이터프레임의 상위 3개 행을 출력하는 코드를 작성하세요.</p>
                     
