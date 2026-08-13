@@ -9,67 +9,87 @@
 <body>
     <div class="layout-container">
         <!-- 사이드바 -->
-        <aside class="sidebar">
+        <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <h2>🐼 Pandas Study</h2>
             </div>
-            <div class="global-setting">
-                <label>
-                    <input type="checkbox" id="globalAnswerToggle" onchange="setGlobalToggle(this)">
-                    답안 항상 보기 (전체)
-                </label>
-            </div>
             <nav class="nav-menu">
                 <a href="../index.html">🏠 홈 (메인)</a>
+                <a href="./datasets.html">📂 데이터 다운로드 센터</a>
                 <a href="./01_load_data.html" class="active">01. 데이터 로드 및 확인</a>
             </nav>
         </aside>
 
-        <!-- 메인 콘텐츠 영역 -->
-        <main class="main-content">
-            <h1>01. 데이터 로드 및 기본 정보 확인</h1>
-            
-            <div class="question-box">
-                <h3>Q. CSV 파일을 로드하고 상위 3개 행을 확인하세요.</h3>
-                <p>주어진 <code>data.csv</code> 파일을 Pandas로 읽어온 뒤, 데이터프레임의 상위 3개 행을 출력하는 코드를 작성하세요.</p>
-                
-                <div class="data-flow">
-                    <!-- AS-IS -->
-                    <div class="data-box asis">
-                        <h4>[AS-IS] 원본 데이터 형태 (data.csv 일부)</h4>
-                        <table class="dataframe-table">
-                            <tr><th>ID</th><th>Measurement</th><th>Status</th></tr>
-                            <tr><td>101</td><td>12.45</td><td>Pass</td></tr>
-                            <tr><td>102</td><td>11.80</td><td>Fail</td></tr>
-                            <tr><td>103</td><td>12.10</td><td>Pass</td></tr>
-                            <tr><td>104</td><td>13.02</td><td>Pass</td></tr>
-                        </table>
-                    </div>
-                    <!-- TO-BE -->
-                    <div class="data-box tobe">
-                        <h4>[TO-BE] 기대 결과 (df.head(3) 출력)</h4>
-                        <table class="dataframe-table">
-                            <tr><th></th><th>ID</th><th>Measurement</th><th>Status</th></tr>
-                            <tr><td>0</td><td>101</td><td>12.45</td><td>Pass</td></tr>
-                            <tr><td>1</td><td>102</td><td>11.80</td><td>Fail</td></tr>
-                            <tr><td>2</td><td>103</td><td>12.10</td><td>Pass</td></tr>
-                        </table>
+        <!-- 메인 래퍼 -->
+        <div class="main-wrapper" id="mainWrapper">
+            <header class="top-navbar">
+                <div class="nav-left">
+                    <button class="icon-btn" onclick="toggleSidebar()">☰ 메뉴</button>
+                    <div class="page-nav-btns">
+                        <a href="./datasets.html">📂 데이터셋</a>
+                        <!-- 다음 페이지 생길 시 여기에 추가 -->
                     </div>
                 </div>
-            </div>
+                <div class="nav-right">
+                    <label class="global-toggle-label">
+                        <input type="checkbox" id="globalAnswerToggle" onchange="setGlobalToggle(this)"> 답안 항상 보기
+                    </label>
+                    <button class="icon-btn" id="themeToggleBtn" onclick="toggleTheme()">🌙 다크모드</button>
+                </div>
+            </header>
 
-            <button class="toggle-btn" onclick="toggleAnswer(this)">답안 확인</button>
-            <div class="answer-content">
-import pandas as pd
+            <main class="main-content">
+                <h1>01. 데이터 로드 및 기본 정보 확인</h1>
+                
+                <div class="question-box">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+                        <h3 style="margin: 0;">Q. CSV 파일을 로드하고 상위 3개 행을 확인하세요.</h3>
+                        <button class="icon-btn" onclick="downloadCurrentCSV()">📥 data.csv 다운로드</button>
+                    </div>
+                    <p>주어진 <code>data.csv</code> 파일을 Pandas로 읽어온 뒤, 데이터프레임의 상위 3개 행을 출력하는 코드를 작성하세요.</p>
+                    
+                    <div class="data-flow">
+                        <!-- AS-IS -->
+                        <div class="data-box asis">
+                            <h4>[AS-IS] 원본 데이터 형태 (data.csv)</h4>
+                            <table class="dataframe-table">
+                                <tr><th>ID</th><th>Measurement</th><th>Status</th></tr>
+                                <tr><td>101</td><td>12.45</td><td>Pass</td></tr>
+                                <tr><td>102</td><td>11.80</td><td>Fail</td></tr>
+                                <tr><td>103</td><td>12.10</td><td>Pass</td></tr>
+                                <tr><td>104</td><td>13.02</td><td>Pass</td></tr>
+                            </table>
+                        </div>
+                        <!-- TO-BE -->
+                        <div class="data-box tobe">
+                            <h4>[TO-BE] 기대 결과 (df.head(3))</h4>
+                            <table class="dataframe-table">
+                                <tr><th></th><th>ID</th><th>Measurement</th><th>Status</th></tr>
+                                <tr><td>0</td><td>101</td><td>12.45</td><td>Pass</td></tr>
+                                <tr><td>1</td><td>102</td><td>11.80</td><td>Fail</td></tr>
+                                <tr><td>2</td><td>103</td><td>12.10</td><td>Pass</td></tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="toggle-btn" onclick="toggleAnswer(this)">답안 확인</button>
+                <div class="answer-content">import pandas as pd
 
 # 1. CSV 파일 로드
 df = pd.read_csv('data.csv')
 
 # 2. 상위 3개 행 출력
-print(df.head(3))
-            </div>
-        </main>
+print(df.head(3))</div>
+            </main>
+        </div>
     </div>
     <script src="../assets/js/main.js"></script>
+    <script>
+        function downloadCurrentCSV() {
+            const csvData = `ID,Measurement,Status\n101,12.45,Pass\n102,11.80,Fail\n103,12.10,Pass\n104,13.02,Pass`;
+            downloadCSVFile('data.csv', csvData);
+        }
+    </script>
 </body>
 </html>
