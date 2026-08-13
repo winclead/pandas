@@ -1,78 +1,115 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pandas 실전 전처리 마스터 클래스</title>
-    <link rel="stylesheet" href="./assets/css/style.css">
-</head>
-<body>
-    <div class="layout-container">
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-header">
-                <h2>🐼 Pandas Study</h2>
-                <button class="close-sidebar-btn" onclick="toggleSidebar()">✕</button>
-            </div>
-            <div class="sidebar-search-box">
-                <input type="text" id="sidebarSearch" placeholder="🔍 주제 검색..." oninput="filterSidebar()">
-            </div>
-            <nav class="nav-menu" id="navMenu">
-                <a href="./index.html" class="active">🏠 홈 (메인)</a>
-                <a href="./pages/datasets.html">📂 데이터 다운로드 센터</a>
-                
-                <div class="nav-phase">Phase 1. 입출력 & 프로파일링</div>
-                <a href="./pages/01_read_csv_advanced.html">01. 인코딩 및 구분자 문제 해결</a>
-                <a href="./pages/02_large_data_chunk.html">02. 대용량 데이터 로드 (chunksize)</a>
-                <a href="./pages/03_basic_profiling.html">03. 기초 메타데이터 파악 (info, shape)</a>
-                <a href="./pages/04_describe_stats.html">04. 통계량 및 분포 확인 (describe)</a>
-                <a href="./pages/05_value_counts.html">05. 고유값 확인 (value_counts)</a>
-                
-                <div class="nav-phase">Phase 2. 정밀 타겟팅</div>
-                <a href="./pages/06_loc_iloc.html">06. 행/열 선택 (loc, iloc)</a>
-                <a href="./pages/07_boolean_indexing.html">07. 다중 조건 불리언 인덱싱</a>
-                <a href="./pages/08_string_filtering.html">08. 텍스트 패턴 필터링</a>
-                
-                <!-- 참고: 코드가 너무 길어지는 것을 방지하기 위해 Phase 3~9의 사이드바 메뉴는 실제 작업 시 위 양식대로 추가하시면 됩니다. -->
-            </nav>
-        </aside>
+:root {
+    --bg-main: #f8fafc;
+    --bg-card: #ffffff;
+    --sidebar-bg: #ffffff;
+    --text-main: #334155;
+    --text-sub: #64748b;
+    --border-color: #e2e8f0;
+    --primary: #1e293b;
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+    --asis-bg: #fff1f2;
+    --tobe-bg: #f0fdf4;
+    --code-bg: #0f172a;
+    --code-text: #e2e8f0;
+}
 
-        <div class="main-wrapper" id="mainWrapper">
-            <header class="top-navbar">
-                <div class="nav-left">
-                    <button class="icon-btn" onclick="toggleSidebar()">☰ 메뉴</button>
-                </div>
-                <div class="nav-right">
-                    <label class="global-toggle-label">
-                        <input type="checkbox" id="globalAnswerToggle" onchange="setGlobalToggle(this)"> 답안 항상 보기
-                    </label>
-                    <button class="icon-btn" id="themeToggleBtn" onclick="toggleTheme()">🌙 다크모드</button>
-                </div>
-            </header>
+[data-theme="dark"] {
+    --bg-main: #0f172a;
+    --bg-card: #1e293b;
+    --sidebar-bg: #1e293b;
+    --text-main: #f1f5f9;
+    --text-sub: #94a3b8;
+    --border-color: #334155;
+    --primary: #f8fafc;
+    --accent: #3b82f6;
+    --accent-hover: #60a5fa;
+    --asis-bg: #4c0519;
+    --tobe-bg: #064e3b;
+    --code-bg: #090d16;
+    --code-text: #f1f5f9;
+}
 
-            <main class="main-content">
-                <h1>Pandas 실전 전처리 마스터 클래스</h1>
-                <p>단순한 기능 학습을 넘어, 반도체 및 데이터 엔지니어링 실무에서 마주하는 온갖 예외 상황과 엣지 케이스를 해결하기 위한 40개의 실전 문제집입니다.</p>
-                
-                <section class="card-section" style="margin-top: 30px;">
-                    <h2>🚀 시작하기</h2>
-                    <div class="chapter-card" onclick="location.href='./pages/01_read_csv_advanced.html'">
-                        <span class="chapter-num">01</span>
-                        <div class="chapter-info">
-                            <h3>인코딩 및 구분자 문제 해결</h3>
-                            <p>CP949 한글 깨짐 현상과 세미콜론(;) 구분자 데이터 처리</p>
-                        </div>
-                    </div>
-                    <div class="chapter-card" onclick="location.href='./pages/02_large_data_chunk.html'">
-                        <span class="chapter-num">02</span>
-                        <div class="chapter-info">
-                            <h3>대용량 데이터 로드 (chunksize)</h3>
-                            <p>RAM 용량을 초과하는 수 기가바이트의 로그 데이터 처리 전략</p>
-                        </div>
-                    </div>
-                </section>
-            </main>
-        </div>
-    </div>
-    <script src="./assets/js/main.js"></script>
-</body>
-</html>
+* { box-sizing: border-box; margin: 0; padding: 0; transition: background-color 0.2s, color 0.2s, border-color 0.2s; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: var(--text-main); background-color: var(--bg-main); line-height: 1.6; }
+
+.layout-container { display: flex; min-height: 100vh; position: relative; overflow-x: hidden; }
+
+/* 사이드바 스타일 */
+.sidebar { width: 280px; background: var(--sidebar-bg); border-right: 1px solid var(--border-color); padding: 24px; position: fixed; top: 0; left: 0; height: 100vh; overflow-y: auto; z-index: 100; transition: transform 0.3s ease, width 0.3s ease; }
+.sidebar.collapsed { transform: translateX(-100%); width: 0; padding: 0; border: none; }
+
+.sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.sidebar-header h2 { font-size: 1.25rem; color: var(--primary); font-weight: 700; margin: 0; }
+.close-sidebar-btn { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-main); padding: 4px 8px; border-radius: 4px; display: none; }
+.close-sidebar-btn:hover { background: var(--border-color); }
+
+.sidebar-search-box { margin-bottom: 16px; }
+.sidebar-search-box input { width: 100%; padding: 8px 12px; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-main); color: var(--text-main); font-size: 0.9rem; outline: none; }
+.sidebar-search-box input:focus { border-color: var(--accent); }
+
+.nav-menu { display: flex; flex-direction: column; gap: 6px; }
+.nav-menu > a { text-decoration: none; color: var(--text-sub); padding: 10px 14px; border-radius: 6px; font-size: 0.95rem; font-weight: 500; display: block; }
+.nav-menu > a:hover { background: var(--border-color); color: var(--primary); }
+.nav-menu > a.active { background: rgba(37, 99, 235, 0.1); color: var(--accent); font-weight: 600; }
+
+/* Phase 아코디언 및 하위 항목 들여쓰기 디자인 */
+.nav-phase-btn { display: flex; justify-content: space-between; align-items: center; background: var(--bg-main); border: 1px solid var(--border-color); width: 100%; text-align: left; font-size: 0.85rem; font-weight: 700; color: var(--primary); margin-top: 12px; margin-bottom: 4px; padding: 10px 14px; cursor: pointer; border-radius: 6px; }
+.nav-phase-btn:hover { border-color: var(--accent); }
+.nav-phase-btn .chevron { font-size: 0.7rem; transition: transform 0.3s ease; }
+.nav-phase-btn.collapsed .chevron { transform: rotate(-90deg); }
+
+.phase-items { display: flex; flex-direction: column; gap: 4px; overflow: hidden; }
+.phase-items.collapsed { display: none; }
+.phase-items a { text-decoration: none; color: var(--text-sub); padding: 8px 14px 8px 32px; border-radius: 6px; font-size: 0.9rem; display: block; position: relative; }
+.phase-items a::before { content: '└'; position: absolute; left: 16px; top: 8px; color: var(--border-color); font-size: 0.8rem; }
+.phase-items a:hover { background: var(--border-color); color: var(--primary); }
+.phase-items a.active { background: rgba(37, 99, 235, 0.1); color: var(--accent); font-weight: 600; }
+
+/* 메인 래퍼 스타일 */
+.main-wrapper { margin-left: 280px; flex: 1; display: flex; flex-direction: column; min-height: 100vh; transition: margin-left 0.3s ease; width: calc(100% - 280px); }
+.main-wrapper.expanded { margin-left: 0; width: 100%; }
+
+/* 상단 네비게이션 바 */
+.top-navbar { background: var(--bg-card); border-bottom: 1px solid var(--border-color); padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 90; width: 100%; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
+.nav-left, .nav-right { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.icon-btn { background: var(--bg-main); border: 1px solid var(--border-color); color: var(--text-main); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 500; }
+.icon-btn:hover { background: var(--border-color); }
+.page-nav-btns a { text-decoration: none; background: var(--border-color); color: var(--text-main); padding: 6px 12px; border-radius: 6px; font-size: 0.85rem; font-weight: 500; display: inline-block; }
+.page-nav-btns a:hover { background: var(--accent); color: white; }
+.global-toggle-label { display: flex; align-items: center; gap: 6px; font-size: 0.85rem; cursor: pointer; color: var(--text-sub); user-select: none; }
+
+/* 콘텐츠 영역 */
+.main-content { padding: 40px; max-width: 950px; width: 100%; }
+h1 { font-size: 1.8rem; margin-bottom: 12px; color: var(--primary); font-weight: 700; }
+p { margin-bottom: 16px; color: var(--text-sub); }
+.question-box { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); }
+.question-box h3 { font-size: 1.15rem; color: var(--primary); margin-bottom: 12px; }
+.data-flow { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+.data-box { padding: 14px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-main); }
+.data-box.asis { border-left: 4px solid #f43f5e; }
+.data-box.tobe { border-left: 4px solid #10b981; }
+.data-box h4 { font-size: 0.85rem; text-transform: uppercase; margin-bottom: 8px; font-weight: 700; letter-spacing: 0.5px; }
+.data-box.asis h4 { color: #f43f5e; }
+.data-box.tobe h4 { color: #10b981; }
+.dataframe-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; background: var(--bg-card); border-radius: 6px; overflow: hidden; }
+.dataframe-table th, .dataframe-table td { border: 1px solid var(--border-color); padding: 6px 10px; text-align: center; color: var(--text-main); }
+.dataframe-table th { background-color: var(--bg-main); font-weight: 600; color: var(--text-main); }
+.chapter-card { display: flex; align-items: center; background: var(--bg-card); border: 1px solid var(--border-color); padding: 16px 20px; border-radius: 10px; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; margin-bottom: 12px; }
+.chapter-card:hover { transform: translateY(-2px); border-color: var(--accent); }
+.chapter-num { font-size: 1.2rem; font-weight: 700; color: var(--accent); margin-right: 20px; background: rgba(37,99,235,0.1); width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 8px; }
+.chapter-info h3 { font-size: 1rem; color: var(--primary); margin-bottom: 2px; }
+.chapter-info p { font-size: 0.85rem; margin: 0; color: var(--text-sub); }
+.toggle-btn { background: var(--accent); color: white; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 600; margin-bottom: 12px; }
+.toggle-btn:hover { background: var(--accent-hover); }
+.answer-content { display: none; background: var(--code-bg); border-radius: 8px; padding: 16px; color: var(--code-text); margin-bottom: 24px; overflow-x: auto; font-family: monospace; font-size: 0.9rem; border-left: 4px solid #10b981; white-space: pre-wrap; line-height: 1.5; }
+.answer-content.show-answer { display: block; }
+
+@media (max-width: 768px) {
+    .sidebar { transform: translateX(-100%); width: 0; padding: 0; border: none; }
+    .sidebar.mobile-show { transform: translateX(0); width: 280px; padding: 24px; border-right: 1px solid var(--border-color); }
+    .sidebar.mobile-show .close-sidebar-btn { display: block; }
+    .main-wrapper { margin-left: 0 !important; width: 100% !important; }
+    .data-flow { grid-template-columns: 1fr; }
+    .main-content { padding: 20px; }
+}
