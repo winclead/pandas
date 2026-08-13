@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>01. 인코딩 및 구분자 문제 해결 - Pandas Study</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <!-- 캐시 방지를 위해 ?v=3 추가 -->
+    <link rel="stylesheet" href="../assets/css/style.css?v=3">
 </head>
 <body>
     <div class="layout-container">
@@ -78,22 +79,34 @@ EQ-03;세정장비_C;IDLE;24.5</pre>
                 </div>
 
                 <button class="toggle-btn" onclick="toggleAnswer(this)">답안 확인</button>
-                <div class="answer-content">import pandas as pd
+                
+                <!-- 분리된 답안 박스 영역 -->
+                <div class="answer-content">
+                    <!-- 방법 1 -->
+                    <div class="solution-item">
+                        <div class="solution-title">💡 방법 1: usecols 파라미터 사용 (가장 빠르고 권장하는 방식)</div>
+                        <pre class="code-block">import pandas as pd
 
-# [방법 1] usecols 파라미터 사용 (가장 빠르고 메모리를 덜 먹는 권장 방식)
 df1 = pd.read_csv('bad_format.csv', sep=';', encoding='cp949', usecols=['EqpName', 'Status'])
-print("--- [방법 1] 권장 방식 ---")
-print(df1)
+print(df1)</pre>
+                    </div>
 
-# [방법 2] 일단 전체를 로드한 후, 열을 필터링하는 방법 (데이터가 크면 비효율적)
+                    <!-- 방법 2 -->
+                    <div class="solution-item">
+                        <div class="solution-title">💡 방법 2: 일단 전체를 로드한 후 열 필터링 (데이터가 크면 비효율적)</div>
+                        <pre class="code-block">import pandas as pd
+
 df_all = pd.read_csv('bad_format.csv', sep=';', encoding='cp949')
 df2 = df_all[['EqpName', 'Status']]
-print("\n--- [방법 2] 전체 로드 후 필터링 ---")
-print(df2)</div>
+print(df2)</pre>
+                    </div>
+                </div>
             </main>
         </div>
     </div>
-    <script src="../assets/js/main.js?v=2"></script>
+    
+    <!-- 캐시 방지를 위해 ?v=3 추가 -->
+    <script src="../assets/js/main.js?v=3"></script>
     <script>
         function downloadCurrentCSV() {
             const csvData = `EqpID;EqpName;Status;Temp\nEQ-01;식각장비_A;RUN;105.2\nEQ-02;증착장비_B;DOWN;42.1\nEQ-03;세정장비_C;IDLE;24.5`;
