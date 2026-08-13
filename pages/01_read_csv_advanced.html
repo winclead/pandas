@@ -19,9 +19,14 @@
             <nav class="nav-menu" id="navMenu">
                 <a href="../index.html">🏠 홈 (메인)</a>
                 <a href="./datasets.html">📂 데이터 다운로드 센터</a>
-                <div class="nav-phase">Phase 1. 입출력 & 프로파일링</div>
-                <a href="./01_read_csv_advanced.html" class="active">01. 인코딩 및 구분자 문제 해결</a>
-                <a href="./02_large_data_chunk.html">02. 대용량 데이터 로드 (chunksize)</a>
+                
+                <button class="nav-phase-btn" onclick="togglePhase(this)">
+                    Phase 1. 입출력 & 프로파일링 <span class="chevron">▼</span>
+                </button>
+                <div class="phase-items">
+                    <a href="./01_read_csv_advanced.html" class="active">01. 인코딩 및 구분자 문제 해결</a>
+                    <a href="./02_large_data_chunk.html">02. 대용량 데이터 로드 (chunksize)</a>
+                </div>
             </nav>
         </aside>
 
@@ -75,17 +80,22 @@ EQ-03;세정장비_C;IDLE;24.5</pre>
                 <button class="toggle-btn" onclick="toggleAnswer(this)">답안 확인</button>
                 <div class="answer-content">import pandas as pd
 
-# 구분자는 sep, 인코딩은 encoding, 특정 컬럼 추출은 usecols 파라미터 사용
-df = pd.read_csv('bad_format.csv', sep=';', encoding='cp949', usecols=['EqpName', 'Status'])
+# [방법 1] usecols 파라미터 사용 (가장 빠르고 메모리를 덜 먹는 권장 방식)
+df1 = pd.read_csv('bad_format.csv', sep=';', encoding='cp949', usecols=['EqpName', 'Status'])
+print("--- [방법 1] 권장 방식 ---")
+print(df1)
 
-print(df)</div>
+# [방법 2] 일단 전체를 로드한 후, 열을 필터링하는 방법 (데이터가 크면 비효율적)
+df_all = pd.read_csv('bad_format.csv', sep=';', encoding='cp949')
+df2 = df_all[['EqpName', 'Status']]
+print("\n--- [방법 2] 전체 로드 후 필터링 ---")
+print(df2)</div>
             </main>
         </div>
     </div>
     <script src="../assets/js/main.js"></script>
     <script>
         function downloadCurrentCSV() {
-            // JS에서 인코딩 처리는 복잡하므로 실습을 위해 UTF-8 텍스트로 임시 제공합니다.
             const csvData = `EqpID;EqpName;Status;Temp\nEQ-01;식각장비_A;RUN;105.2\nEQ-02;증착장비_B;DOWN;42.1\nEQ-03;세정장비_C;IDLE;24.5`;
             downloadCSVFile('bad_format.csv', csvData);
         }
