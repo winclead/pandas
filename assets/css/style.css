@@ -1,27 +1,76 @@
 :root {
-    --primary-color: #2c3e50;
-    --accent-color: #3498db;
-    --bg-color: #f8f9fa;
-    --border-color: #dee2e6;
+    --primary: #1e293b;
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+    --bg-main: #f8fafc;
+    --bg-card: #ffffff;
+    --text-main: #334155;
+    --border-color: #e2e8f0;
+    --asis-bg: #fff1f2;
+    --tobe-bg: #f0fdf4;
 }
+
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: sans-serif; color: #333; background-color: var(--bg-color); line-height: 1.6; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: var(--text-main); background-color: var(--bg-main); line-height: 1.6; }
+
 .layout-container { display: flex; min-height: 100vh; }
-.sidebar { width: 280px; background: #fff; border-right: 1px solid var(--border-color); padding: 20px; position: fixed; height: 100vh; }
-.main-content { margin-left: 280px; flex: 1; padding: 40px; }
-.global-setting { background: #f1f3f5; padding: 10px; border-radius: 6px; margin-bottom: 20px; font-size: 0.9rem; }
-.nav-menu { display: flex; flex-direction: column; gap: 8px; }
-.nav-menu a { text-decoration: none; color: #495057; padding: 8px 12px; border-radius: 4px; }
-.nav-menu a:hover, .nav-menu a.active { background: #e7f5ff; color: var(--accent-color); font-weight: bold; }
-.question-box { background: #fff; border: 1px solid var(--border-color); padding: 20px; margin-bottom: 20px; border-radius: 8px; }
-.dataframe-table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.9rem; }
-.dataframe-table th, .dataframe-table td { border: 1px solid var(--border-color); padding: 8px; text-align: center; }
-.dataframe-table th { background-color: #f1f3f5; }
-.toggle-btn { background: var(--accent-color); color: white; border: none; padding: 10px 16px; border-radius: 4px; cursor: pointer; }
-.answer-content { display: none; background: #272822; padding: 15px; border-radius: 4px; color: #f8f8f2; margin-bottom: 20px; overflow-x: auto; }
+
+/* 사이드바 디자인 */
+.sidebar { width: 280px; background: var(--bg-card); border-right: 1px solid var(--border-color); padding: 24px; position: fixed; height: 100vh; overflow-y: auto; box-shadow: 2px 0 5px rgba(0,0,0,0.02); }
+.sidebar-header h2 { font-size: 1.25rem; color: var(--primary); margin-bottom: 20px; font-weight: 700; }
+
+.global-setting { background: #f1f5f9; padding: 12px; border-radius: 8px; margin-bottom: 24px; font-size: 0.85rem; border: 1px solid var(--border-color); }
+.global-setting label { display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 500; color: #475569; }
+
+.nav-menu { display: flex; flex-direction: column; gap: 6px; }
+.nav-menu a { text-decoration: none; color: #64748b; padding: 10px 14px; border-radius: 6px; font-size: 0.95rem; font-weight: 500; transition: all 0.2s; }
+.nav-menu a:hover { background: #f1f5f9; color: var(--primary); }
+.nav-menu a.active { background: #eff6ff; color: var(--accent); font-weight: 600; }
+
+/* 메인 콘텐츠 영역 */
+.main-content { margin-left: 280px; flex: 1; padding: 40px; max-width: 950px; }
+
+h1 { font-size: 1.8rem; margin-bottom: 12px; color: var(--primary); font-weight: 700; }
+p { margin-bottom: 16px; color: #475569; }
+
+.hero-section { margin-bottom: 30px; }
+
+/* 카드 및 문제 박스 스타일 */
+.question-box { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); }
+.question-box h3 { font-size: 1.15rem; color: var(--primary); margin-bottom: 12px; }
+
+/* AS-IS / TO-BE 영역 스타일 */
+.data-flow { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+.data-box { padding: 14px; border-radius: 8px; border: 1px solid var(--border-color); }
+.data-box.asis { background-color: var(--asis-bg); border-faint: #f43f5e; }
+.data-box.tobe { background-color: var(--tobe-bg); }
+.data-box h4 { font-size: 0.85rem; text-transform: uppercase; margin-bottom: 8px; font-weight: 700; letter-spacing: 0.5px; }
+.data-box.asis h4 { color: #e11d48; }
+.data-box.tobe h4 { color: #16a34a; }
+
+/* 데이터프레임 표 디자인 */
+.dataframe-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; background: #fff; border-radius: 6px; overflow: hidden; }
+.dataframe-table th, .dataframe-table td { border: 1px solid var(--border-color); padding: 6px 10px; text-align: center; }
+.dataframe-table th { background-color: #f8fafc; font-weight: 600; color: #475569; }
+
+/* 홈 화면 챕터 카드 */
+.chapter-card { display: flex; align-items: center; background: var(--bg-card); border: 1px solid var(--border-color); padding: 16px 20px; border-radius: 10px; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
+.chapter-card:hover { transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0,0,0,0.05); border-color: var(--accent); }
+.chapter-num { font-size: 1.2rem; font-weight: 700; color: var(--accent); margin-right: 20px; background: #eff6ff; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 8px; }
+.chapter-info h3 { font-size: 1rem; color: var(--primary); margin-bottom: 2px; }
+.chapter-info p { font-size: 0.85rem; margin: 0; color: #64748b; }
+
+/* 토글 버튼 및 답안 영역 */
+.toggle-btn { background: var(--accent); color: white; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 600; margin-bottom: 12px; transition: background 0.2s; box-shadow: 0 2px 4px rgba(37,99,235,0.2); }
+.toggle-btn:hover { background: var(--accent-hover); }
+
+.answer-content { display: none; background: #0f172a; border-radius: 8px; padding: 16px; color: #e2e8f0; margin-bottom: 24px; overflow-x: auto; font-family: monospace; font-size: 0.9rem; border-left: 4px solid #10b981; }
 .answer-content.show-answer { display: block; }
+
+/* 반응형 (모바일 대응) */
 @media (max-width: 768px) {
     .layout-container { flex-direction: column; }
-    .sidebar { position: static; width: 100%; height: auto; border-right: none; border-bottom: 1px solid var(--border-color); }
+    .sidebar { position: static; width: 100%; height: auto; border-right: none; border-bottom: 1px solid var(--border-color); padding: 16px; }
     .main-content { margin-left: 0; padding: 20px; }
+    .data-flow { grid-template-columns: 1fr; }
 }
