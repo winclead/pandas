@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>05. 고유값 확인 및 빈도수 분석 - Pandas Study</title>
+    <link rel="stylesheet" href="../assets/css/style.css?v=3">
+</head>
+<body>
+    <div class="layout-container">
+        <!-- 사이드바 시작 -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2>🐼 Pandas Study</h2>
+                <button class="close-sidebar-btn" onclick="toggleSidebar()">✕</button>
+            </div>
+            <div class="sidebar-search-box">
+                <input type="text" id="sidebarSearch" placeholder="🔍 주제 검색..." oninput="filterSidebar()">
+            </div>
+            <nav class="nav-menu" id="navMenu">
+                <a href="../index.html">🏠 홈 (메인)</a>
+                <a href="./datasets.html">📂 데이터 다운로드 센터</a>
+                
+                <button class="nav-phase-btn" onclick="togglePhase(this)">
+                    Phase 1. 입출력 & 프로파일링 <span class="chevron">▼</span>
+                </button>
+                <div class="phase-items">
+                    <a href="./01_read_csv_advanced.html">01. 인코딩 및 구분자 문제 해결</a>
+                    <a href="./02_large_data_chunk.html">02. 대용량 데이터 로드 (chunksize)</a>
+                    <a href="./03_basic_profiling.html">03. 기초 메타데이터 파악</a>
+                    <a href="./04_describe_stats.html">04. 통계량 및 분포 확인</a>
+                    <a href="./05_value_counts.html">05. 고유값 확인 및 빈도수</a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- 메인 콘텐츠 시작 -->
+        <div class="main-wrapper" id="mainWrapper">
+            <header class="top-navbar">
+                <div class="nav-left">
+                    <button class="icon-btn" onclick="toggleSidebar()">☰ 메뉴</button>
+                </div>
+                <div class="nav-right">
+                    <label class="global-toggle-label">
+                        <input type="checkbox" id="globalAnswerToggle" onchange="setGlobalToggle(this)"> 답안 항상 보기
+                    </label>
+                    <button class="icon-btn" id="themeToggleBtn" onclick="toggleTheme()">🌙 다크모드</button>
+                </div>
+            </header>
+
+<main class="main-content">
+                <h1>05. 고유값 확인 및 빈도수 분석 (value_counts)</h1>
+                
+                <div class="question-box">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
+                        <h3 style="margin: 0;">Q. 장비 에러 코드의 발생 횟수와 점유율(%)을 집계하세요.</h3>
+                        <button class="icon-btn" onclick="downloadCurrentCSV()">📥 error_logs.csv 다운로드</button>
+                    </div>
+                    <p>장비 알람 이력인 <code>error_logs.csv</code> 파일에서 어떤 종류의 에러(ErrorCode)가 많이 발생했는지 분석하려 합니다. <strong>각 에러 코드별 발생 건수</strong>를 계산하고, 나아가 단순 건수가 아닌 <strong>전체 대비 발생 비율(%)</strong>로 변환하여 출력하는 코드를 작성하세요.</p>
+                    
+                    <div class="data-flow">
+                        <div class="data-box asis">
+                            <h4>[AS-IS] 원본 발생 로그</h4>
+                            <table class="dataframe-table">
+                                <tr><th>LogID</th><th>ErrorCode</th></tr>
+                                <tr><td>1</td><td>E-001</td></tr>
+                                <tr><td>2</td><td>E-001</td></tr>
+                                <tr><td>3</td><td>E-002</td></tr>
+                                <tr><td>4</td><td>E-001</td></tr>
+                            </table>
+                        </div>
+                        <div class="data-box tobe">
+                            <h4>[TO-BE] 비율(점유율) 요약 도출</h4>
+                            <pre style="font-family: monospace; font-size: 0.9rem; background: var(--bg-card); padding: 10px; border-radius: 4px; border: 1px solid var(--border-color); color: var(--text-main);">ErrorCode
+E-001    0.75
+E-002    0.25
+Name: proportion, dtype: float64</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="toggle-btn" onclick="toggleAnswer(this)">답안 확인</button>
+                
+                <div class="answer-content">
+                    <div class="solution-item">
+                        <div class="solution-title">💡 방법 1: 범주별 발생 횟수 카운팅 (내림차순 자동 정렬)</div>
+                        <pre class="code-block">import pandas as pd
+df = pd.read_csv('error_logs.csv')
+
+# 특정 컬럼의 고유값과 그 빈도수를 확인 (가장 많이 발생한 순으로 정렬됨)
+print(df['ErrorCode'].value_counts())
+
+# 만약 NaN(결측치) 데이터도 카운트하고 싶다면 dropna=False 옵션 추가
+# print(df['ErrorCode'].value_counts(dropna=False))</pre>
+                    </div>
+
+                    <div class="solution-item">
+                        <div class="solution-title">💡 방법 2: 발생 비율(점유율)로 변환 (normalize=True)</div>
+                        <pre class="code-block">import pandas as pd
+df = pd.read_csv('error_logs.csv')
+
+# 카운트 대신 0~1 사이의 비율로 반환합니다. (퍼센트로 보려면 * 100)
+# 실무에서 "이 불량이 전체 불량의 몇 %를 차지하는가?"를 볼 때 가장 많이 쓰입니다.
+print(df['ErrorCode'].value_counts(normalize=True))</pre>
+                    </div>
+                </div>
+                
+                <script>
+                    function downloadCurrentCSV() {
+                        const csvData = `LogID,ErrorCode\n1,E-001\n2,E-001\n3,E-002\n4,E-001`;
+                        downloadCSVFile('error_logs.csv', csvData);
+                    }
+                </script>
+            </main>
+        </div>
+    </div>
+    
+    <script src="../assets/js/main.js?v=3"></script>
+</body>
+</html>
