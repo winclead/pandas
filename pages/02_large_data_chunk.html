@@ -19,9 +19,14 @@
             <nav class="nav-menu" id="navMenu">
                 <a href="../index.html">🏠 홈 (메인)</a>
                 <a href="./datasets.html">📂 데이터 다운로드 센터</a>
-                <div class="nav-phase">Phase 1. 입출력 & 프로파일링</div>
-                <a href="./01_read_csv_advanced.html">01. 인코딩 및 구분자 문제 해결</a>
-                <a href="./02_large_data_chunk.html" class="active">02. 대용량 데이터 로드 (chunksize)</a>
+                
+                <button class="nav-phase-btn" onclick="togglePhase(this)">
+                    Phase 1. 입출력 & 프로파일링 <span class="chevron">▼</span>
+                </button>
+                <div class="phase-items">
+                    <a href="./01_read_csv_advanced.html">01. 인코딩 및 구분자 문제 해결</a>
+                    <a href="./02_large_data_chunk.html" class="active">02. 대용량 데이터 로드 (chunksize)</a>
+                </div>
             </nav>
         </aside>
 
@@ -50,8 +55,8 @@
                         <h3 style="margin: 0;">Q. 메모리를 초과하는 로그 데이터에서 불량(Fail) 발생 건수만 집계하세요.</h3>
                         <button class="icon-btn" onclick="downloadCurrentCSV()">📥 huge_log.csv 다운로드</button>
                     </div>
-                    <p><code>huge_log.csv</code>는 수천만 행을 가진 10GB 크기의 센서 데이터로 한 번에 메모리(RAM)에 올릴 수 없습니다. <code>chunksize</code>를 활용해 데이터를 10만 줄 단위로 나누어 읽어오면서, 각 조각(chunk)에서 <strong>'Status'가 'Fail'인 건수만 누적해서 계산</strong>하는 코드를 작성하세요.</p>
-                    <p><em>(본 사이트 실습을 위해 다운로드되는 파일은 6줄짜리 미니 버전입니다. <code>chunksize=2</code>로 설정하여 테스트해보세요.)</em></p>
+                    <p><code>huge_log.csv</code>는 수천만 행을 가진 10GB 크기의 센서 데이터로 한 번에 메모리에 올릴 수 없습니다. <code>chunksize</code>를 활용해 데이터를 나누어 읽으면서, 각 조각에서 <strong>'Status'가 'Fail'인 건수만 누적해서 계산</strong>하는 코드를 작성하세요.</p>
+                    <p><em>(본 사이트 실습을 위해 다운로드되는 파일은 미니 버전입니다. <code>chunksize=2</code>로 설정하여 테스트해보세요.)</em></p>
                     
                     <div class="data-flow">
                         <div class="data-box asis">
@@ -62,8 +67,7 @@
 3,EQ-01,Pass
 4,EQ-03,Fail
 5,EQ-02,Pass
-6,EQ-01,Fail
-... (수천만 줄) ...</pre>
+6,EQ-01,Fail</pre>
                         </div>
                         <div class="data-box tobe">
                             <h4>[TO-BE] 필요한 최종 결과값 도출</h4>
@@ -75,19 +79,21 @@
                 <button class="toggle-btn" onclick="toggleAnswer(this)">답안 확인</button>
                 <div class="answer-content">import pandas as pd
 
-# 전체 Fail 건수를 누적할 변수 초기화
+# [방법 1] 표준적인 for문 활용법 (직관적이고 가독성이 좋음)
 total_fail_count = 0
-
-# chunksize 지정 시 read_csv는 TextFileReader 객체를 반환 (반복문 사용 가능)
-# 실제 대용량 파일은 100000 등으로 지정 (여기서는 실습용 2 지정)
 chunk_iter = pd.read_csv('huge_log.csv', chunksize=2)
 
 for chunk in chunk_iter:
-    # 각 청크(데이터프레임 조각)에서 Status가 Fail인 행의 개수를 센 후 누적
-    fail_count = (chunk['Status'] == 'Fail').sum()
-    total_fail_count += fail_count
+    total_fail_count += (chunk['Status'] == 'Fail').sum()
+    
+print(f"Total Fail Count (방법 1): {total_fail_count}")
 
-print(f"Total Fail Count: {total_fail_count}")</div>
+
+# [방법 2] 제너레이터 표현식과 sum()을 결합한 파이썬다운(Pythonic) 한 줄 코드
+chunk_iter2 = pd.read_csv('huge_log.csv', chunksize=2)
+total_fail_count2 = sum((chunk['Status'] == 'Fail').sum() for chunk in chunk_iter2)
+
+print(f"Total Fail Count (방법 2): {total_fail_count2}")</div>
             </main>
         </div>
     </div>
