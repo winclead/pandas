@@ -9,6 +9,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const checkbox = document.getElementById('globalAnswerToggle');
     if (checkbox) checkbox.checked = isGlobalShow;
     if (isGlobalShow) applyGlobalAnswerState(true);
+
+    // 바깥쪽 클릭 시 사이드바 닫기 (모바일 대응)
+    document.addEventListener('click', (event) => {
+        const sidebar = document.getElementById('sidebar');
+        const menuBtn = document.querySelector('.icon-btn[onclick="toggleSidebar()"]');
+        if (window.innerWidth <= 768 && sidebar.classList.contains('mobile-show')) {
+            if (!sidebar.contains(event.target) && menuBtn && !menuBtn.contains(event.target)) {
+                sidebar.classList.remove('mobile-show');
+            }
+        }
+    });
 });
 
 function toggleSidebar() {
@@ -21,6 +32,20 @@ function toggleSidebar() {
         sidebar.classList.toggle('collapsed');
         wrapper.classList.toggle('expanded');
     }
+}
+
+// 사이드바 실시간 검색 필터
+function filterSidebar() {
+    const query = document.getElementById('sidebarSearch').value.toLowerCase();
+    const links = document.querySelectorAll('#navMenu a');
+    links.forEach(link => {
+        const text = link.textContent.toLowerCase();
+        if (text.includes(query)) {
+            link.style.display = 'block';
+        } else {
+            link.style.display = 'none';
+        }
+    });
 }
 
 function toggleTheme() {
