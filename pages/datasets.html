@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>데이터 다운로드 센터 - Pandas Study</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+    <div class="layout-container">
+        <!-- 사이드바 -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2>🐼 Pandas Study</h2>
+            </div>
+            <nav class="nav-menu">
+                <a href="../index.html">🏠 홈 (메인)</a>
+                <a href="./datasets.html" class="active">📂 데이터 다운로드 센터</a>
+                <a href="./01_load_data.html">01. 데이터 로드 및 확인</a>
+            </nav>
+        </aside>
+
+        <!-- 메인 래퍼 -->
+        <div class="main-wrapper" id="mainWrapper">
+            <header class="top-navbar">
+                <div class="nav-left">
+                    <button class="icon-btn" onclick="toggleSidebar()">☰ 메뉴</button>
+                    <div class="page-nav-btns">
+                        <a href="../index.html">← 홈으로</a>
+                    </div>
+                </div>
+                <div class="nav-right">
+                    <label class="global-toggle-label">
+                        <input type="checkbox" id="globalAnswerToggle" onchange="setGlobalToggle(this)"> 답안 항상 보기
+                    </label>
+                    <button class="icon-btn" id="themeToggleBtn" onclick="toggleTheme()">🌙 다크모드</button>
+                </div>
+            </header>
+
+            <main class="main-content">
+                <h1>📂 데이터 다운로드 센터</h1>
+                <p>본 스터디 사이트의 모든 문제에서 사용하는 원본 CSV 샘플 파일들을 모아두었습니다. 언제든 다운로드하여 로컬 환경에서 직접 실습해 보세요.</p>
+                
+                <div class="question-box" style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <h3 style="margin-bottom: 4px;">1. 기본 측정 데이터 (data.csv)</h3>
+                        <p style="margin: 0; font-size: 0.85rem;">[챕터 01] ID, Measurement, Status 컬럼으로 구성된 기본 샘플 데이터</p>
+                    </div>
+                    <button class="toggle-btn" style="margin: 0;" onclick="downloadSampleData1()">📥 다운로드</button>
+                </div>
+            </main>
+        </div>
+    </div>
+    <script src="../assets/js/main.js"></script>
+    <script>
+        function downloadSampleData1() {
+            const csvData = `ID,Measurement,Status\n101,12.45,Pass\n102,11.80,Fail\n103,12.10,Pass\n104,13.02,Pass`;
+            downloadCSVFile('data.csv', csvData);
+        }
+    </script>
+</body>
+</html>
