@@ -9,40 +9,54 @@
 <body>
     <div class="layout-container">
         <!-- 사이드바 -->
-        <aside class="sidebar">
+        <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <h2>🐼 Pandas Study</h2>
             </div>
-            <div class="global-setting">
-                <label>
-                    <input type="checkbox" id="globalAnswerToggle" onchange="setGlobalToggle(this)">
-                    답안 항상 보기 (전체)
-                </label>
-            </div>
             <nav class="nav-menu">
                 <a href="./index.html" class="active">🏠 홈 (메인)</a>
+                <a href="./pages/datasets.html">📂 데이터 다운로드 센터</a>
                 <a href="./pages/01_load_data.html">01. 데이터 로드 및 확인</a>
             </nav>
         </aside>
 
-        <!-- 메인 콘텐츠 영역 -->
-        <main class="main-content">
-            <div class="hero-section">
+        <!-- 메인 래퍼 (상단바 + 콘텐츠) -->
+        <div class="main-wrapper" id="mainWrapper">
+            <header class="top-navbar">
+                <div class="nav-left">
+                    <button class="icon-btn" onclick="toggleSidebar()">☰ 메뉴</button>
+                </div>
+                <div class="nav-right">
+                    <label class="global-toggle-label">
+                        <input type="checkbox" id="globalAnswerToggle" onchange="setGlobalToggle(this)"> 답안 항상 보기
+                    </label>
+                    <button class="icon-btn" id="themeToggleBtn" onclick="toggleTheme()">🌙 다크모드</button>
+                </div>
+            </header>
+
+            <main class="main-content">
                 <h1>Pandas 데이터 전처리 스터디</h1>
                 <p>실무와 분석에 바로 쓰는 파이썬 판다스 핵심 전처리 코드를 AS-IS / TO-BE 기반으로 학습하는 공간입니다.</p>
-            </div>
-            
-            <section class="card-section">
-                <h2>📚 학습 목차</h2>
-                <div class="chapter-card" onclick="location.href='./pages/01_load_data.html'">
-                    <span class="chapter-num">01</span>
-                    <div class="chapter-info">
-                        <h3>데이터 로드 및 기본 정보 확인</h3>
-                        <p>CSV 파일 읽어오기 및 상위 데이터 파악</p>
+                
+                <section class="card-section" style="margin-top: 30px;">
+                    <h2>📚 학습 목차</h2>
+                    <div class="chapter-card" onclick="location.href='./pages/datasets.html'">
+                        <span class="chapter-num">📂</span>
+                        <div class="chapter-info">
+                            <h3>데이터 다운로드 센터</h3>
+                            <p>실습에 사용되는 모든 CSV 샘플 파일을 한눈에 확인하고 다운로드하세요.</p>
+                        </div>
                     </div>
-                </div>
-            </section>
-        </main>
+                    <div class="chapter-card" onclick="location.href='./pages/01_load_data.html'">
+                        <span class="chapter-num">01</span>
+                        <div class="chapter-info">
+                            <h3>데이터 로드 및 기본 정보 확인</h3>
+                            <p>CSV 파일 읽어오기 및 상위 데이터 파악</p>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
     </div>
     <script src="./assets/js/main.js"></script>
 </body>
