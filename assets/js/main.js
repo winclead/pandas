@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 4. [신규] 이전/다음 페이지 자동 생성 기능 실행
+    // 4. [핵심] 현재 URL 기반으로 이전/다음 버튼 자동 생성!
     setupAutoNavigation();
 });
 
@@ -108,21 +108,43 @@ function downloadCSVFile(filename, csvText) {
 }
 
 // ==========================================
-// [신규] 이전/다음 페이지 버튼 자동 생성 로직
+// [개선] URL을 직접 읽어서 확실하게 네비게이션 생성
 // ==========================================
 function setupAutoNavigation() {
-    // 사이드바의 모든 링크 <a> 태그를 가져옵니다.
     const navLinks = Array.from(document.querySelectorAll('#navMenu a'));
-    // 현재 접속중인 페이지(active 클래스가 붙은 요소)의 인덱스를 찾습니다.
-    const activeIndex = navLinks.findIndex(link => link.classList.contains('active'));
     
-    if (activeIndex === -1) return;
+    // 현재 브라우저 URL에서 파일명만 추출 (예: '01_read_csv_advanced.html')
+    let currentFileName = window.location.pathname.split('/').pop();
+    if (!currentFileName || currentFileName === '') {
+        currentFileName = 'index.html'; // 파일명이 없으면 메인홈으로 간주
+    }
 
-    // 상단 네비게이션 좌측 영역을 찾습니다.
+    // 사이드바 링크 중 href의 파일명이 현재 파일명과 일치하는 위치 찾기
+    let activeIndex = navLinks.findIndex(link => {
+        const linkHref = link.getAttribute('href');
+        if (!linkHref) return false;
+        const linkFileName = linkHref.split('/').pop();
+        return linkFileName === currentFileName;
+    });
+
+    if (activeIndex === -1) return; // 위치를 못 찾으면 종료
+
+    // [중요] JS가 직접 현재 메뉴에 불을 켜주고, 소속된 아코디언 폴더를 펼칩니다.
+    const activeLink = navLinks[activeIndex];
+    activeLink.classList.add('active');
+    
+    const parentPhase = activeLink.closest('.phase-items');
+    if (parentPhase) {
+        parentPhase.classList.remove('collapsed');
+        if (parentPhase.previousElementSibling) {
+            parentPhase.previousElementSibling.classList.remove('collapsed');
+        }
+    }
+
+    // 상단에 버튼을 넣을 공간 찾기
     const navLeft = document.querySelector('.nav-left');
     if (!navLeft) return;
 
-    // page-nav-btns 컨테이너가 없으면 만듭니다. (자동화 스크립트로 누락된 부분 해결)
     let pageNavBtns = document.querySelector('.page-nav-btns');
     if (!pageNavBtns) {
         pageNavBtns = document.createElement('div');
@@ -131,20 +153,20 @@ function setupAutoNavigation() {
     }
     pageNavBtns.innerHTML = ''; // 초기화
 
-    // 첫 페이지가 아니라면 '이전' 버튼 생성
+    // 이전 버튼 생성
     if (activeIndex > 0) {
         const prevLink = navLinks[activeIndex - 1];
         const prevA = document.createElement('a');
-        prevA.href = prevLink.href;
+        prevA.href = prevLink.getAttribute('href');
         prevA.textContent = '← 이전';
         pageNavBtns.appendChild(prevA);
     }
 
-    // 마지막 페이지가 아니라면 '다음' 버튼 생성
+    // 다음 버튼 생성
     if (activeIndex < navLinks.length - 1) {
         const nextLink = navLinks[activeIndex + 1];
         const nextA = document.createElement('a');
-        nextA.href = nextLink.href;
+        nextA.href = nextLink.getAttribute('href');
         nextA.textContent = '다음 →';
         pageNavBtns.appendChild(nextA);
     }
